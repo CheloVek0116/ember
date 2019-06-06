@@ -58,14 +58,11 @@ class Subscribe(LoginRequiredMixin, View):
 		User.objects.get(username=username).subscribers.remove(self.request.user)
 
 
-class RegisterFormView(FormView):
-    form = UserCreationForm
-    template_name = "registration.html"
-    success_url = "/accounts/login/"
-
-    def form_valid(self, form):
-        form.save()
-        return super(RegisterFormView, self).form_valid(form)
+class SignUp(CreateView):
+    """Вьюха регистрации пользователя"""
+    form_class = SignUpForm
+    success_url = ''
+    template_name = 'registration/signup.html'
 
 
 

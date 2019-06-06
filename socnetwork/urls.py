@@ -9,3 +9,9 @@ urlpatterns = [
 	path('<str:username>/subscribe/', Subscribe.as_view(), name='subscribe'), # подписка
 	path('<str:username>/', ProfileWallList.as_view(), name='user_page_url'), # юзеры
 ]
+
+
+# url'ы регистрации
+urlpatterns += [
+    path('accounts/signup/', SignUp.as_view(), name='signup')
+]

@@ -18,14 +18,12 @@ from django.urls import path, include
 
 from django.conf import settings
 from django.conf.urls.static import static
-from socnetwork.views import RegisterFormView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('social/', include('social_django.urls', namespace='social')),
-    path('register/', RegisterFormView.as_view(), name='reg'),
     path('', include('socnetwork.urls')),
 ]
 
