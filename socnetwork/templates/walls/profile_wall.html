@@ -1,0 +1,35 @@
+{% extends "walls/base_wall.html" %}
+
+{% block title %}
+    {{ profile }} - Profile
+{% endblock title %}
+
+
+{% block active1 %}
+	{% if user.posts.all.0 in posts %} 
+	    btn-success
+	{% endif %}
+{% endblock active1 %}
+
+{% block subscribe %}
+	<h5>
+		<img 	src="{% if  profile.avatar %}{{ profile.avatar.url }}{% else %}/media/user.jpg{% endif %}" 
+				style="border-radius: 25px; height: 50px; width: 50px;" 
+				alt="{{ profile.last_name }} {{ profile.first_name }}">
+				{{ profile.last_name }} {{ profile.first_name }}
+	</h5>
+	{% if user not in profile %}
+	    <div class="actions">
+	        <form action="{% url 'subscribe' username=profile.username %}" method="post">
+	        {% csrf_token %}
+
+	        {% if profile.id in subscriptions %}
+	        	<input type="submit" value="Отписаться" />
+	        {% else %}
+	            <input type="submit" value="Подписаться" />
+	        {% endif %}
+	        </form>
+	    </div>
+	{% endif %}
+	
+{% endblock subscribe %}

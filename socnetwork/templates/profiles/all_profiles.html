@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block active_profile %}
+    btn-success
+{% endblock active_profile %}
+
+{% block content %}
+	{% for profile in profiles %}
+		<div class="card mt-3" style="width: 100%;">
+			<div class="card-body">
+				<h5 class="card-title">
+					<img 	src="{% if  profile.avatar %}{{ profile.avatar.url }}{% else %}/media/user.jpg{% endif %}"
+							style="border-radius: 25px; height: 50px; width: 50px;" 
+							alt="{{ profile.last_name }} {{ profile.first_name }}">
+					<a href="{% url 'user_page_url' username=profile.username %}">{{ profile.last_name }} {{ profile.first_name }}</a>
+				</h5>
+				<h6 class="card-subtitle mb-2 text-muted"></h6>
+				<p class="card-text"></p>
+				<form action="{% url 'subscribe' username=profile.username %}" method="post">
+					{% csrf_token %}
+
+					{% if profile.id in subscriptions %}
+					    <input type="submit" value="Отписаться" />
+					{% else %}
+					    <input type="submit" value="Подписаться" />
+					 {% endif %}
+				</form>
+				<a href="#" class="card-link">Another link</a>
+			</div>
+		</div>
+	{% endfor %}
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}

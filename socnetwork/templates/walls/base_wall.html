@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+	{% block subscribe %}
+	{% endblock subscribe %}
+
+	{% if user == profile or request.path == '/feed/' %}
+	    <div class="row">
+			<form method="post" action="{{ request.path }}">
+				{% csrf_token %}
+
+				{{ form.content }}
+				<div>
+					<input type="submit" value="Добавить пост"/>
+				</div>
+			</form>
+		</div>
+	{% endif %}
+	
+	{% for post in posts %}
+	<div class="card mt-3" style="width: 100%;">
+		<div class="card-body">
+			<h5 class="card-title">
+				<img 	src="{% if  post.user.avatar %}{{ post.user.avatar.url }}{% else %}/media/user.jpg{% endif %}" 
+						style="border-radius: 25px; height: 50px; width: 50px;" 
+						alt="{{ post.user.last_name }} {{ post.user.first_name }}">
+
+			<a href="{% url 'user_page_url' username=post.user.username %}">{{ post.user.last_name }} {{ post.user.first_name }}</a></h5>
+			<h6 class="card-subtitle mb-2 text-muted">{{ post.published }}</h6>
+			<p class="card-text">{{ post.content }}</p>
+			<a href="#" class="card-link">Card link</a>
+			<a href="#" class="card-link">Another link</a>
+		</div>
+	</div>
+	{% endfor %}
+
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}

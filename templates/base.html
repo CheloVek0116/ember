@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<title>{% block title %}Title{% endblock title %}</title>
+</head>
+<body>
+	<ul class="nav nav-pills nav-fill">
+		<li class="nav-item">
+			<a class="nav-link {% block active1 %}{% endblock active1 %}" href="{{ user.get_absolute_url }}">my page</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link {% block active_feed %}{% endblock active_feed %}" href="{% url 'feed_list_url' %}">feed</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link {% block active_profile %}{% endblock active_profile %}" href="{% url 'all_profiles_url' %}">profiles</a>
+		</li>
+		{% if user.is_authenticated %}
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'logout' %}">logout</a>
+			</li>
+		{% else %}
+		    <li class="nav-item">
+				<a class="nav-link {% block login %}{% endblock login %}" href="{% url 'login' %}">login</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link {% block reg %}{% endblock reg %}" href="{% url 'reg' %}">reg</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'social:begin' 'vk-oauth2' %}">vk</a>
+			</li>
+		{% endif %}
+		
+		
+	</ul>
+	
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col-md-6 offset-md-2">
+				{% block content %}
+
+				{% endblock content %}
+			</div>
+		</div>
+	</div>
+
+{% block script %}
+{% endblock script %}
+
+</body>
+</html>
